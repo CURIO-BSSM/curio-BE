@@ -10,7 +10,7 @@ cd curio-backend
 ```
 2. 가상환경 세팅
 ```bash
-python -m venv venv
+python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
