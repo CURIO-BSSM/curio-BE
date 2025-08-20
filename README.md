@@ -2,8 +2,13 @@
 
 큐리오 프로젝트 백엔드 서버입니다. FastAPI 기반으로 개발되었습니다.
 
-## 설치
-1. 가상환경 생성
+## 프로젝트 설치
+1. 레포 클론
+```bash
+git clone https://github.com/CURIO-BSSM/curio-frontend
+cd curio-frontend
+```
+2. 가상환경 세팅
 ```bash
 python -m venv venv
 source .venv/bin/activate
