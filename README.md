@@ -5,8 +5,8 @@
 ## 프로젝트 설치
 1. 레포 클론
 ```bash
-git clone https://github.com/CURIO-BSSM/curio-frontend
-cd curio-frontend
+git clone https://github.com/CURIO-BSSM/curio-backend
+cd curio-backend
 ```
 2. 가상환경 세팅
 ```bash
