@@ -1,3 +1,15 @@
+# Curio Backend
+
+큐리오 프로젝트 백엔드 서버입니다. FastAPI 기반으로 개발되었습니다.
+
+## 설치
+1. 가상환경 생성
+```bash
+python -m venv venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## branch
 dev에서 개발하고 푸시할 것
 
