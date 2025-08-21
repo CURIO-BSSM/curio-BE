@@ -11,15 +11,15 @@ router = APIRouter(prefix="/auth" ,tags=["auth"])
 def signup(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user:
-        raise HTTPException(status_code=400, detail="Email already exists")
+        raise HTTPException(status_code=400, detail="이미 존재하는 이메일 입니다.")
 
     new_user = User(name=user.name, password_hash=hash_password(user.password),email=user.email)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    access_token = create_access_token({"sub": new_user.email})
-    return {"access_token": access_token, "token_type": "bearer","status": "회원가입 성공!"}
+    exp,access_token = create_access_token({"sub": new_user.email})
+    return {"message": "회원가입이 완료되었습니다.", "user_id": new_user.id,"access_token": access_token, "token_type": "bearer", "expires_in": exp.isoformat()}
 
 @router.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
@@ -28,5 +28,5 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     exp,access_token = create_access_token({"sub": db_user.email})
 
-    return {"access_token": access_token, "token_type": "bearer","expires_in": exp.isoformat() }
+    return {"access_token": access_token, "token_type": "bearer", "expires_in": exp.isoformat() }
 

@@ -5,16 +5,13 @@ class UserCreate(BaseModel):
     password: str
     email: str
 
-class UserCreateOut(BaseModel):
-    message:str
-    user_id:int
-
-
 class UserLogin(BaseModel):
     email: str
     password: str
 
 class Token(BaseModel):
+    message: str
+    user_id: int
     access_token: str
     token_type: str
     expires_in: str
