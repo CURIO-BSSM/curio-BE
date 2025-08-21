@@ -1,20 +1,10 @@
-# routers/quiz.py
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.crud.question_crud import get_quiz_by_unit
 from app.schemas.question_schemas import QuizOut, QuestionOut
-from app.core.config import SessionLocal
+from app.core.config import get_db
 
-router = APIRouter(prefix="/quiz", tags=["Quiz"])
-
-
-# DB 세션
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+router = APIRouter(prefix="/quiz" ,tags=["quiz"])
 
 
 @router.get("/", response_model=QuizOut)
