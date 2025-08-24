@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.core.config import engine, Base
+import uvicorn
 
 app = FastAPI(title="Science Project API")
 
@@ -12,3 +13,6 @@ Base.metadata.create_all(bind=engine)
 @app.get("/")
 def root():
     return {"message": ""}
+
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
