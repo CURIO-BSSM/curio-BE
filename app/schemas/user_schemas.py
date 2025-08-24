@@ -15,3 +15,6 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     expires_in: str
+
+class UserLogout(BaseModel):
+    access_token: str
