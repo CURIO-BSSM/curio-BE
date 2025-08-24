@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.schemas.user_schemas import UserCreate, Token, UserLogin
 from app.core.config import get_db
@@ -30,3 +31,9 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 
     return {"access_token": access_token, "token_type": "bearer", "expires_in": exp.isoformat() }
 
+@router.post("/logout")
+def logout():
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"detail": "로그아웃이 완료되었습니다."}
+    )
