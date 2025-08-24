@@ -37,4 +37,3 @@ def logout():
         status_code=status.HTTP_200_OK,
         content={"detail": "로그아웃이 완료되었습니다."}
     )
-
