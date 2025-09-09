@@ -11,3 +11,17 @@ class QuizOut(BaseModel):
     unit_name: str
     questions: List[QuestionOut]
     model_config = {"from_attributes": True}
+
+class Answer(BaseModel):
+    question_id: int
+    selected_answer: int
+
+class QuizRequest(BaseModel):
+    user_id: int
+    answers: List[Answer]
+
+class QuizResponse(BaseModel):
+    score: int
+    total: int
+    correct: List[int]
+    wrong: List[int]

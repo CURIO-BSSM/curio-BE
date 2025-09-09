@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from app.crud.question_crud import get_quiz_by_unit
-from app.schemas.question_schemas import QuizOut, QuestionOut
+from app.crud.question_crud import get_quiz_by_unit,get_question_by_id,save_user_answers_bulk
+from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse
 from app.core.config import get_db
 
 router = APIRouter(prefix="/quiz" ,tags=["quiz"])
@@ -26,4 +26,39 @@ def get_quiz(unit_id: int = Query(...), db: Session = Depends(get_db)):
         unit_id=unit.id,
         unit_name=unit.name,
         questions=questions
+    )
+
+@router.post("/submit", response_model=QuizResponse)
+def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
+    correct = []
+    wrong = []
+    user_answers_bulk = []
+
+    for ans in request.answers:
+        question = get_question_by_id(db, ans.question_id)
+        if not question:
+            wrong.append(ans.question_id)
+            continue
+
+        is_correct = str(ans.selected_answer) == str(question.correct_answer)
+        if is_correct:
+            correct.append(ans.question_id)
+        else:
+            wrong.append(ans.question_id)
+
+        user_answers_bulk.append({
+            "user_id": request.user_id,
+            "question_id": ans.question_id,
+            "selected_answer": ans.selected_answer,
+            "is_correct": is_correct
+        })
+
+    if user_answers_bulk:
+        save_user_answers_bulk(db, user_answers_bulk)
+
+    return QuizResponse(
+        score=len(correct),
+        total=len(request.answers),
+        correct=correct,
+        wrong=wrong
     )
