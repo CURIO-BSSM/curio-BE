@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.crud.question_crud import get_quiz_by_unit,get_question_by_id,save_user_answers_bulk
-from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse
+from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse,QuizAdd
 from app.core.config import get_db
 
 router = APIRouter(prefix="/quiz" ,tags=["quiz"])

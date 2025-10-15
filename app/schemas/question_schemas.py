@@ -25,3 +25,9 @@ class QuizResponse(BaseModel):
     total: int
     correct: List[int]
     wrong: List[int]
+
+class QuizAdd(BaseModel):
+    unit_id: int
+    content: str
+    options: List[str]
+    correct_answer: int
