@@ -65,12 +65,12 @@ def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
     )
 @router.post("/add", response_model=QuizAdd)
 def add_quiz(request: QuizAdd, db: Session = Depends(get_db)):
-    addedQuiz = [{
+    addedQuiz = {
         "unit_id": request.unit_id,
         "content": request.content,
         "options": request.options,
         "correct_answer": request.correct_answer,
-    }]
+    }
     if addedQuiz:
         Quiz = save_new_quiz(db, addedQuiz)
     return JSONResponse(
