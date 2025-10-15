@@ -40,3 +40,18 @@ def save_user_answers_bulk(db: Session, answers: list):
     db.add_all(user_answers)
     db.commit()
     return user_answers
+
+def save_new_quiz(db: Session, addedQuiz: list):
+    data = addedQuiz[0]
+    Quiz = [
+        Question(
+            unit_id=data["unit_id"],
+            content=data["content"],
+            options=data["options"],
+            correct_answer=data["correct_answer"],
+        )
+    ]
+    db.add_all(Quiz)
+    db.commit()
+    db.refresh(Quiz)
+    return Quiz
