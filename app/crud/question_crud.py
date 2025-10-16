@@ -48,7 +48,7 @@ def save_new_quiz(db: Session, addedQuiz: dict):
             options=addedQuiz["options"],
             correct_answer=addedQuiz["correct_answer"],
         )
-    db.add_all(Quiz)
+    db.add(Quiz)
     db.commit()
     db.refresh(Quiz)
     return Quiz

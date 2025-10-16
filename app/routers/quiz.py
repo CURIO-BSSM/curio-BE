@@ -75,5 +75,5 @@ def add_quiz(request: QuizAdd, db: Session = Depends(get_db)):
         Quiz = save_new_quiz(db, addedQuiz)
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content={"message": "퀴즈가 성공적으로 추가되었습니다.","questions_id":Quiz.questions_id}
+        content={"message": "퀴즈가 성공적으로 추가되었습니다.","questions_id":Quiz.id}
     )
