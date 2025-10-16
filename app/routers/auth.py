@@ -27,9 +27,15 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if not db_user or not verify_password(user.password, db_user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    exp,access_token = create_access_token({"sub": db_user.email})
+    exp,access_token = create_access_token({"sub": db_user.email,"is_admin":db_user.is_admin})
 
-    return {"access_token": access_token, "token_type": "bearer", "expires_in": exp.isoformat() }
+    return Token(
+        message="로그인 성공",
+        user_id=db_user.id,
+        access_token=access_token,
+        token_type="bearer",
+        expires_in=exp.isoformat()
+    )
 
 @router.post("/logout")
 def logout():

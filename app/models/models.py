@@ -21,7 +21,6 @@ class Unit(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
     description = Column(String(255))
-    order = Column(Integer, nullable=False)
 
     questions = relationship("Question", back_populates="unit")
 
