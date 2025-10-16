@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query,status
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
+
+from app.core.security import admin_required
 from app.crud.question_crud import get_quiz_by_unit, get_question_by_id, save_user_answers_bulk, save_new_quiz
 from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse,QuizAdd
 from app.core.config import get_db
@@ -64,7 +66,7 @@ def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
         wrong=wrong
     )
 @router.post("/add", response_model=QuizAdd)
-def add_quiz(request: QuizAdd, db: Session = Depends(get_db)):
+def add_quiz(request: QuizAdd, db: Session = Depends(get_db),current_user=Depends(admin_required)):
     addedQuiz = {
         "unit_id": request.unit_id,
         "content": request.content,
