@@ -1,12 +1,12 @@
-from app.crud.unit_crud import get_unit
-from app.schemas.unit_schemas import Units
 from fastapi import APIRouter, Depends, HTTPException
-from core.config import get_db
 from sqlalchemy.orm import Session
+from app.crud.unit_crud import get_unit
+from app.schemas.unit_schemas import units
+from app.core.config import get_db
 
-router = APIRouter(prefix="/unit", tags=["/unit"])
+router = APIRouter(prefix="/units", tags=["units"])
 
-@router.get("/", response_model=list[Units])
+@router.get("/", response_model=list[units])
 def read_unit(db: Session = Depends(get_db)):
     result = get_unit(db)
     if not result:
