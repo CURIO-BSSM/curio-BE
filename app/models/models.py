@@ -13,6 +13,7 @@ class User(Base):
     created_at = Column(TIMESTAMP, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
     answers = relationship("UserAnswer", back_populates="user")
+    rank = relationship("Ranking", back_populates="user")
 
 
 class Unit(Base):
@@ -50,3 +51,12 @@ class UserAnswer(Base):
 
     user = relationship("User", back_populates="answers")
     question = relationship("Question", back_populates="user_answers")
+
+class Ranking(Base):
+    __tablename__ = "rankings"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    score = Column(Integer, nullable=False, default=0)
+
+    user = relationship("User", back_populates="rank")
