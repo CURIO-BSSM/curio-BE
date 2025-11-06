@@ -63,6 +63,7 @@ def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
 
     score = len(correct)
     update_score(db, request.user_id, score)
+    create_user_history(db, user_id=request.user_id, unit_id=request.unit_id, score=score)
 
     return QuizResponse(
         score=score,

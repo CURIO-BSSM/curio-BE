@@ -22,8 +22,7 @@ def rankings(db: Session, limit: int = 100):
 def update_score(db: Session, user_id: int, score: int):
     ranking = db.query(Ranking).filter(Ranking.user_id == user_id).first()
     if ranking:
-        if score > ranking.score:
-            ranking.score = score
+        ranking.score += score
     else:
         ranking = Ranking(user_id=user_id, score=score)
         db.add(ranking)
