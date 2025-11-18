@@ -34,8 +34,9 @@ class Question(Base):
     id = Column(Integer, primary_key=True, index=True)
     unit_id = Column(Integer, ForeignKey("units.id"), nullable=False)
     content = Column(String(500), nullable=False)
-    options = Column(JSON, nullable=False)
+    options = Column(JSON, nullable=True)
     correct_answer = Column(String(255), nullable=False)
+    question_type = Column(String(20), nullable=False, default="objective")
 
     unit = relationship("Unit", back_populates="questions")
     user_answers = relationship("UserAnswer", back_populates="question")

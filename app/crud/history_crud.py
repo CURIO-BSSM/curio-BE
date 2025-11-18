@@ -26,6 +26,7 @@ def get_user_history(db: Session, user_id: int):
     history_list = []
     for history, unit_name in result:
         history_list.append({
+            "id": history.id,
             "user_id": history.user_id,
             "unit_name": unit_name,
             "score": history.score,
