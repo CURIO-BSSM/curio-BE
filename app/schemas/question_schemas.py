@@ -4,8 +4,8 @@ from typing import List, Optional, Dict
 class QuestionOut(BaseModel):
     id: int
     content: str
-    question_type: str
-    options: Optional[Dict[str, str]] = None # 객관식만
+    options: List[str]
+    correct_answer : int
 
 class QuizOut(BaseModel):
     unit_id: int

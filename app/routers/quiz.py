@@ -23,8 +23,8 @@ def get_quiz(unit_id: int = Query(...), db: Session = Depends(get_db)):
         QuestionOut(
             id=q.id,
             content=q.content,
-            question_type=q.question_type,
-            options=q.options if q.question_type == "objective" else None
+            options=q.options,
+            correct_answer = q.correct_answer,
         ) for q in result["questions"]
     ]
 

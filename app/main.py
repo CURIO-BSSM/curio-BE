@@ -2,7 +2,18 @@ from fastapi import FastAPI
 from app.core.config import engine, Base
 import uvicorn
 
+
 app = FastAPI(title="Science Project API")
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 개발 중엔 * 로 두고, 배포 시 특정 도메인만
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from app.routers import quiz,auth,unit,rank,history
 app.include_router(quiz.router)
