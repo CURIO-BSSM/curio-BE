@@ -5,6 +5,7 @@ class QuestionOut(BaseModel):
     id: int
     content: str
     options: List[str]
+    correct_answer : int
 
 class QuizOut(BaseModel):
     unit_id: int
