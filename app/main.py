@@ -4,11 +4,12 @@ import uvicorn
 
 app = FastAPI(title="Science Project API")
 
-from app.routers import quiz,auth,unit,rank
+from app.routers import quiz,auth,unit,rank,history
 app.include_router(quiz.router)
 app.include_router(auth.router)
 app.include_router(unit.router)
 app.include_router(rank.router)
+app.include_router(history.router)
 # DB 테이블 생성
 Base.metadata.create_all(bind=engine)
 
