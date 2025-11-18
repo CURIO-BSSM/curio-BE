@@ -14,6 +14,7 @@ class User(Base):
 
     answers = relationship("UserAnswer", back_populates="user")
     rank = relationship("Ranking", back_populates="user")
+    user_history = relationship("History", back_populates="user")
 
 
 class Unit(Base):
@@ -24,6 +25,7 @@ class Unit(Base):
     description = Column(String(255))
 
     questions = relationship("Question", back_populates="unit")
+    unit_history = relationship("History", back_populates="unit")
 
 
 class Question(Base):
@@ -60,3 +62,15 @@ class Ranking(Base):
     score = Column(Integer, nullable=False, default=0)
 
     user = relationship("User", back_populates="rank")
+
+class History(Base):
+    __tablename__ = "histories"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    unit_id = Column(Integer, ForeignKey("units.id"), nullable=False)
+    score = Column(Integer, nullable=False)
+    answered_at = Column(TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'))
+
+    user = relationship("User", back_populates="user_history")
+    unit = relationship("Unit", back_populates="unit_history")

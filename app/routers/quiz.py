@@ -2,10 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, Query,status
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
+from app.crud.ranking_crud import update_score
 from app.core.security import admin_required
 from app.crud.question_crud import get_quiz_by_unit, get_question_by_id, save_user_answers_bulk, save_new_quiz
 from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse,QuizAdd
 from app.core.config import get_db
+from app.crud.history_crud import create_user_history
 
 router = APIRouter(prefix="/quiz" ,tags=["quiz"])
 
@@ -59,8 +61,12 @@ def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
     if user_answers_bulk:
         save_user_answers_bulk(db, user_answers_bulk)
 
+    score = len(correct)
+    update_score(db, request.user_id, score)
+    create_user_history(db, user_id=request.user_id, unit_id=request.unit_id, score=score)
+
     return QuizResponse(
-        score=len(correct),
+        score=score,
         total=len(request.answers),
         correct=correct,
         wrong=wrong
