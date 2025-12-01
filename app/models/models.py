@@ -33,7 +33,7 @@ class Question(Base):
     id = Column(Integer, primary_key=True, index=True)
     unit_id = Column(Integer, ForeignKey("units.id"), nullable=False)
     content = Column(String(500), nullable=False)
-    options = Column(JSONB, nullable=False)
+    options = Column(JSONB, nullable=True)
     correct_answer = Column(String(255), nullable=False)
 
     unit = relationship("Unit", back_populates="questions")
