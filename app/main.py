@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from app.routers import quiz,auth,unit,rank
+from app.routers import quiz,auth,unit,rank,history
 app.include_router(quiz.router)
 app.include_router(auth.router)
 app.include_router(unit.router)
