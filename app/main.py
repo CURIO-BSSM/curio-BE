@@ -7,9 +7,16 @@ app = FastAPI(title="Science Project API")
 
 from fastapi.middleware.cors import CORSMiddleware
 
+origins = [
+    "http://localhost:5173",  # 로컬 테스트용
+    "https://<배포된 프론트 URL>",  # 실제 배포 환경 URL
+]
+
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 개발 중엔 * 로 두고, 배포 시 특정 도메인만
+    allow_origins=origins,  # 개발 중엔 * 로 두고, 배포 시 특정 도메인만
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
