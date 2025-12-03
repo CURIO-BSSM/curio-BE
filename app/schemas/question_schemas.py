@@ -19,6 +19,7 @@ class Answer(BaseModel):
 
 class QuizRequest(BaseModel):
     user_id: int
+    unit_id: int
     answers: List[Answer]
 
 class QuizResponse(BaseModel):
