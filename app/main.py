@@ -8,7 +8,8 @@ app = FastAPI(title="Science Project API")
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
-    "https://curio-fe.vercel.app",  # 로컬 테스트용  # 실제 배포 환경 URL
+    "http://localhost:5173",
+    "https://curio-fe.vercel.app",
 ]
 
 
