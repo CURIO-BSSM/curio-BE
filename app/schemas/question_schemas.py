@@ -1,16 +1,18 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 class QuestionOut(BaseModel):
     id: int
     content: str
     options: List[str]
     correct_answer : int
+    img_url: Optional[str] = None
 
 class QuizOut(BaseModel):
     unit_id: int
     unit_name: str
     questions: List[QuestionOut]
+    img_url: Optional[str] = None
     model_config = {"from_attributes": True}
 
 class Answer(BaseModel):
@@ -32,3 +34,4 @@ class QuizAdd(BaseModel):
     content: str
     options: List[str]
     correct_answer: int
+    img_url: Optional[str] = None

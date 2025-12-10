@@ -36,6 +36,7 @@ class Question(Base):
     content = Column(String(500), nullable=False)
     options = Column(JSON, nullable=False)
     correct_answer = Column(String(255), nullable=False)
+    img_url = Column(String, nullable=True)
 
     unit = relationship("Unit", back_populates="questions")
     user_answers = relationship("UserAnswer", back_populates="question")
