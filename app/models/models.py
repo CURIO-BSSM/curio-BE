@@ -50,7 +50,7 @@ class UserAnswer(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id"), nullable=False)
-    selected_answer = Column(String(255), nullable=False)
+    selected_answer = Column(Integer, nullable=False)
     is_correct = Column(Boolean, nullable=False)
     answered_at = Column(TIMESTAMP, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
