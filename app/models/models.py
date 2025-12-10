@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, ForeignKey, JSON, text
+from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, ForeignKey, text
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import JSONB
 from app.core.config import Base
 
 class User(Base):
@@ -16,7 +17,7 @@ class User(Base):
     rank = relationship("Ranking", back_populates="user")
     user_history = relationship("History", back_populates="user")
 
-
+    
 class Unit(Base):
     __tablename__ = "units"
 
@@ -34,9 +35,10 @@ class Question(Base):
     id = Column(Integer, primary_key=True, index=True)
     unit_id = Column(Integer, ForeignKey("units.id"), nullable=False)
     content = Column(String(500), nullable=False)
-    options = Column(JSON, nullable=False)
+    options = Column(JSONB, nullable=True)
     correct_answer = Column(String(255), nullable=False)
     img_url = Column(String, nullable=True)
+    question_type = Column(String(20), nullable=False, default="objective")
 
     unit = relationship("Unit", back_populates="questions")
     user_answers = relationship("UserAnswer", back_populates="question")
@@ -55,9 +57,10 @@ class UserAnswer(Base):
     user = relationship("User", back_populates="answers")
     question = relationship("Question", back_populates="user_answers")
 
+
 class Ranking(Base):
     __tablename__ = "rankings"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     score = Column(Integer, nullable=False, default=0)

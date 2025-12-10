@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.crud.ranking_crud import update_score
 from app.core.security import admin_required
 from app.crud.question_crud import get_quiz_by_unit, get_question_by_id, save_user_answers_bulk, save_new_quiz
-from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse,QuizAdd
+from app.schemas.question_schemas import QuizOut, QuestionOut, QuizRequest,QuizResponse,QuizAdd, QuizAddResponse
 from app.core.config import get_db
 from app.crud.history_crud import create_user_history
 
@@ -73,18 +73,19 @@ def submit_quiz(request: QuizRequest, db: Session = Depends(get_db)):
         correct=correct,
         wrong=wrong
     )
-@router.post("/add", response_model=QuizAdd)
+@router.post("/add", response_model=QuizAddResponse)
 def add_quiz(request: QuizAdd, db: Session = Depends(get_db),current_user=Depends(admin_required)):
+    if request.question_type not in ["objective", "subjective"]:
+        raise HTTPException(status_code=400, detail="문항 유형은 객관식 또는 주관식만 가능합니다.")
+
     addedQuiz = {
         "unit_id": request.unit_id,
         "content": request.content,
         "options": request.options,
+        "question_type": request.question_type,
         "correct_answer": request.correct_answer,
         "img_url": request.img_url,
     }
-    if addedQuiz:
-        Quiz = save_new_quiz(db, addedQuiz)
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"message": "퀴즈가 성공적으로 추가되었습니다.","questions_id":Quiz.id}
-    )
+
+    Quiz = save_new_quiz(db, addedQuiz)
+    return QuizAddResponse(message="퀴즈가 성공적으로 추가되었습니다.", questions_id=Quiz.id)

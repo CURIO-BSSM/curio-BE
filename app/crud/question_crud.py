@@ -45,9 +45,10 @@ def save_new_quiz(db: Session, addedQuiz: dict):
     Quiz = Question(
             unit_id=addedQuiz["unit_id"],
             content=addedQuiz["content"],
-            options=addedQuiz["options"],
+            options=addedQuiz.get("options"),
             correct_answer=addedQuiz["correct_answer"],
-            img_url=addedQuiz.get("img_url")
+            img_url=addedQuiz.get("img_url"),
+            question_type=addedQuiz["question_type"],
         )
     db.add(Quiz)
     db.commit()
