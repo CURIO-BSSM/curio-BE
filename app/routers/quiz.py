@@ -25,6 +25,7 @@ def get_quiz(unit_id: int = Query(...), db: Session = Depends(get_db)):
             content=q.content,
             options=q.options,
             correct_answer = q.correct_answer,
+            img_url=q.img_url,
         ) for q in result["questions"]
     ]
 
@@ -83,6 +84,7 @@ def add_quiz(request: QuizAdd, db: Session = Depends(get_db),current_user=Depend
         "options": request.options,
         "question_type": request.question_type,
         "correct_answer": request.correct_answer,
+        "img_url": request.img_url,
     }
 
     Quiz = save_new_quiz(db, addedQuiz)

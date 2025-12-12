@@ -6,11 +6,13 @@ class QuestionOut(BaseModel):
     content: str
     options: List[str]
     correct_answer : int
+    img_url: Optional[str] = None
 
 class QuizOut(BaseModel):
     unit_id: int
     unit_name: str
     questions: List[QuestionOut]
+    img_url: Optional[str] = None
     model_config = {"from_attributes": True}
 
 class Answer(BaseModel):
@@ -32,6 +34,7 @@ class QuizResponse(BaseModel):
 class QuizAdd(BaseModel):
     unit_id: int
     content: str
+    img_url: Optional[str] = None
     question_type: str
     options: Optional[Dict[str, str]] = None  # 객관식만
     correct_answer: str

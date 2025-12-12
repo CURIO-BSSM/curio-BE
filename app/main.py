@@ -10,6 +10,13 @@ origins= [
     "http://localhost:5173",
 ]
 
+origins = [
+    "http://localhost:5173",
+    "https://curio-fe.vercel.app",
+]
+
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # 개발 중엔 * 로 두고, 배포 시 특정 도메인만
